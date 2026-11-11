@@ -9,8 +9,8 @@ public class Kasir extends Pengguna {
     // Sesuai diagram: +buatPesanan() : Pesanan
     public Pesanan buatPesanan() {
         System.out.println("Kasir [" + getNama() + "] membuka form pesanan baru...");
-        // Mengembalikan objek Pesanan kosong (mengikuti constructor di Main)
-        return new Pesanan("ORD-NEW", 0); 
+        // Nomor meja default 1 karena Pesanan memvalidasi nomorMeja > 0
+        return new Pesanan("ORD-NEW", 1);
     }
 
     @Override
