@@ -7,6 +7,7 @@ import com.resto.model.ItemPesanan;
 import com.resto.model.Makanan;
 import com.resto.model.Menu;
 import com.resto.model.Pembayaran;
+import com.resto.model.Pesanan;
 import com.resto.model.QRIS;
 import com.resto.model.Tunai;
 
@@ -81,6 +82,23 @@ public class Main {
 
         Pembayaran bayarQRIS = new QRIS("QRIS-RESTO-20261111-001");
         tampilkanSimulasiPembayaran("QRIS Valid", bayarQRIS, totalTagihan);
+
+        // 8. Simulasi Integrasi Kelas Pesanan
+        System.out.println("\n--- SIMULASI OBJEK PESANAN TERINTEGRASI ---");
+        Pesanan pesanan = new Pesanan("ORD-001", 5);
+        pesanan.tambahItem(item1);
+        pesanan.tambahItem(item2);
+        pesanan.setDiskon(diskonVoucher);
+        System.out.println("Status awal : " + pesanan.getStatus());
+        System.out.printf("Subtotal    : Rp %,.2f\n", pesanan.hitungSubtotal());
+        System.out.printf("Total Akhir : Rp %,.2f\n", pesanan.hitungTotal());
+
+        Pembayaran pembayaranPesanan = new Tunai(100000.0);
+        if (pembayaranPesanan.prosesPembayaran(pesanan.hitungTotal())) {
+            pesanan.setPembayaran(pembayaranPesanan);
+            pesanan.setStatus(Pesanan.SELESAI);
+        }
+        System.out.println("Ringkasan   : " + pesanan);
 
         System.out.println("\n====================================================");
         System.out.println("             PENGUJIAN KELAS SELESAI                ");

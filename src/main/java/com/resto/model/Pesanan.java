@@ -21,6 +21,7 @@ public class Pesanan {
     private final int nomorMeja;
     private final List<ItemPesanan> items = new ArrayList<>();
     private Diskon diskon; // Relasi UML: memakai 0..1 Diskon
+    private Pembayaran pembayaran; // Relasi UML: dibayar dengan 0..1 Pembayaran
 
     public Pesanan(String idPesanan, int nomorMeja) {
         this(idPesanan, new Date(), MENUNGGU_PEMBAYARAN, nomorMeja);
@@ -84,6 +85,15 @@ public class Pesanan {
     public void setDiskon(Diskon diskon) {
         pastikanMasihDapatDiubah();
         this.diskon = diskon;
+    }
+
+    public Pembayaran getPembayaran() {
+        return pembayaran;
+    }
+
+    public void setPembayaran(Pembayaran pembayaran) {
+        pastikanMasihDapatDiubah();
+        this.pembayaran = pembayaran;
     }
 
     public void tambahItem(ItemPesanan item) {
