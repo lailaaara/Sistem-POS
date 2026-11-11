@@ -1,8 +1,14 @@
 package com.resto;
 
+import com.resto.model.Diskon;
+import com.resto.model.DiskonMember;
+import com.resto.model.DiskonVoucher;
 import com.resto.model.ItemPesanan;
 import com.resto.model.Makanan;
 import com.resto.model.Menu;
+import com.resto.model.Pembayaran;
+import com.resto.model.QRIS;
+import com.resto.model.Tunai;
 
 /**
  * Titik masuk utama (Entry Point) untuk pengujian alur logika kelas model restoran.
@@ -26,7 +32,7 @@ public class Main {
         System.out.println("\n--- SIMULASI PEMESANAN ---");
         int jumlahPesan = 3;
         System.out.println("Pelanggan memesan " + jumlahPesan + " porsi " + menu1.getNama() + "...");
-        
+
         boolean berhasil = menu1.kurangiStok(jumlahPesan);
         if (berhasil) {
             double subtotal = jumlahPesan * menu1.hitungHarga();
@@ -52,6 +58,30 @@ public class Main {
         double totalKotor = item1.hitungSubtotal() + item2.hitungSubtotal();
         System.out.printf("Total Kotor Pesanan: Rp %,.2f\n", totalKotor);
 
+        // 6. Simulasi Strategy Pattern Diskon (DiskonMember & DiskonVoucher)
+        System.out.println("\n--- SIMULASI STRATEGI DISKON ---");
+        Diskon diskonMember = new DiskonMember(10.0);
+        Diskon diskonVoucher = new DiskonVoucher(15000.0);
+        Diskon voucherMelebihiTotal = new DiskonVoucher(200000.0);
+
+        tampilkanSimulasiDiskon("Member (10%)", diskonMember, totalKotor);
+        tampilkanSimulasiDiskon("Voucher (Rp 15.000)", diskonVoucher, totalKotor);
+        tampilkanSimulasiDiskon("Voucher (Rp 200.000)", voucherMelebihiTotal, totalKotor);
+
+        // 7. Simulasi Strategy Pattern Pembayaran (Tunai & QRIS)
+        System.out.println("\n--- SIMULASI PEMBAYARAN ---");
+        double totalTagihan = totalKotor - diskonMember.hitungDiskon(totalKotor);
+        System.out.printf("Total Tagihan (setelah Diskon Member 10%%): Rp %,.2f\n", totalTagihan);
+
+        Pembayaran bayarTunaiKurang = new Tunai(50000.0);
+        tampilkanSimulasiPembayaran("Tunai (Rp 50.000)", bayarTunaiKurang, totalTagihan);
+
+        Pembayaran bayarTunaiCukup = new Tunai(150000.0);
+        tampilkanSimulasiPembayaran("Tunai (Rp 150.000)", bayarTunaiCukup, totalTagihan);
+
+        Pembayaran bayarQRIS = new QRIS("QRIS-RESTO-20261111-001");
+        tampilkanSimulasiPembayaran("QRIS Valid", bayarQRIS, totalTagihan);
+
         System.out.println("\n====================================================");
         System.out.println("             PENGUJIAN KELAS SELESAI                ");
         System.out.println("====================================================");
@@ -76,5 +106,29 @@ public class Main {
                 item.hitungSubtotal()
         );
     }
-}
 
+    private static void tampilkanSimulasiDiskon(String label, Diskon diskon, double totalKotor) {
+        double potongan = diskon.hitungDiskon(totalKotor);
+        double totalAkhir = totalKotor - potongan;
+        System.out.printf("%-22s | Potongan: Rp %,.2f | Total Akhir: Rp %,.2f\n",
+                label,
+                potongan,
+                totalAkhir
+        );
+    }
+
+    private static void tampilkanSimulasiPembayaran(String label, Pembayaran pembayaran, double totalTagihan) {
+        boolean sukses = pembayaran.prosesPembayaran(totalTagihan);
+        if (sukses) {
+            if (pembayaran instanceof Tunai tunai) {
+                System.out.printf("%-20s | Status: BERHASIL | Dibayar: Rp %,.2f | Kembalian: Rp %,.2f\n",
+                        label, tunai.getJumlahBayar(), tunai.hitungKembalian());
+            } else {
+                System.out.printf("%-20s | Status: BERHASIL | Dibayar: Rp %,.2f\n",
+                        label, pembayaran.getJumlahBayar());
+            }
+        } else {
+            System.out.printf("%-20s | Status: GAGAL\n", label);
+        }
+    }
+}
