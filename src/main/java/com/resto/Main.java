@@ -4,11 +4,15 @@ import com.resto.model.Diskon;
 import com.resto.model.DiskonMember;
 import com.resto.model.DiskonVoucher;
 import com.resto.model.ItemPesanan;
+import com.resto.model.Kasir;
 import com.resto.model.Makanan;
+import com.resto.model.Manajer;
 import com.resto.model.Menu;
 import com.resto.model.Pembayaran;
+import com.resto.model.Pengguna;
 import com.resto.model.Pesanan;
 import com.resto.model.QRIS;
+import com.resto.model.Struk;
 import com.resto.model.Tunai;
 
 /**
@@ -100,8 +104,27 @@ public class Main {
         }
         System.out.println("Ringkasan   : " + pesanan);
 
+        // 9. Simulasi Autentikasi Pengguna, Hak Akses, & Output Struk (Bagian Malvin)
+        System.out.println("\n--- SIMULASI AKUN PENGGUNA ---");
+        Pengguna pengguna1 = new Kasir("KSR-01", "Budi Kasir", "pass123");
+        Pengguna pengguna2 = new Manajer("MNJ-01", "Siska Manajer", "admin123");
+
+        pengguna1.login();
+        System.out.println("Peran: " + pengguna1.getPeran());
+        ((Kasir) pengguna1).buatPesanan(); 
+        pengguna1.logout();
+
+        System.out.println();
+        pengguna2.login();
+        System.out.println("Peran: " + pengguna2.getPeran());
+        ((Manajer) pengguna2).lihatLaporan();
+        
+        System.out.println("\n--- SIMULASI OUTPUT STRUK ---");
+        Struk strukOrder = new Struk("STRK-" + pesanan.getIdPesanan());
+        strukOrder.cetak();
+
         System.out.println("\n====================================================");
-        System.out.println("             PENGUJIAN KELAS SELESAI                ");
+        System.out.println("            PENGUJIAN KELAS SELESAI                ");
         System.out.println("====================================================");
     }
 
