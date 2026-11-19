@@ -1,9 +1,7 @@
 package com.resto.model;
 
 /**
- * Kelas abstrak dasar yang merepresentasikan entitas Menu dalam katalog restoran.
- * Mengimplementasikan template dasar untuk perhitungan harga varian produk
- * dan pengelolaan stok inventori.
+ * Kelas abstrak dasar dan berperan sebagai induk class dari Makanan dan Minuman.
  */
 public abstract class Menu {
     private String idMenu;

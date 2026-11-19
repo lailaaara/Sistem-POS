@@ -7,6 +7,7 @@ import com.resto.model.Kasir;
 import com.resto.model.Makanan;
 import com.resto.model.Manajer;
 import com.resto.model.Menu;
+import com.resto.model.Minuman;
 import com.resto.model.Pembayaran;
 import com.resto.model.Pesanan;
 import com.resto.model.QRIS;
@@ -59,6 +60,9 @@ public class Main {
         katalogMenu.add(new Makanan("M03", "Mie Goreng Seafood", 28000, 10, false));
         katalogMenu.add(new Makanan("M04", "Soto Ayam Lamongan", 22000, 15, false));
         katalogMenu.add(new Makanan("M05", "Sate Ayam (10 Tusuk)", 32000, 8, false));
+        katalogMenu.add(new Minuman("D01", "Es Teh Manis", 5000, 30, true));
+        katalogMenu.add(new Minuman("D02", "Kopi Susu Gula Aren", 18000, 20, true));
+        katalogMenu.add(new Minuman("D03", "Jeruk Peras Hangat", 8000, 25, false));
     }
 
     private static void jalankanSesiKasir() {
@@ -185,20 +189,36 @@ public class Main {
         Menu masterMenu = katalogMenu.get(pilihMenu - 1);
         int jumlah = bacaInt("Jumlah porsi: ", 1, 999);
 
-        System.out.print("Apakah ingin dipanaskan? (+Rp 2.000/porsi) [y/n]: ");
-        String jawabPanas = scanner.nextLine().trim();
-        boolean dipanaskan = jawabPanas.equalsIgnoreCase("y");
+        Menu menuItem;
+        if (masterMenu instanceof Makanan) {
+            System.out.print("Apakah ingin pedas? [y/n]: ");
+            String jawabPedas = scanner.nextLine().trim();
+            boolean pedas = jawabPedas.equalsIgnoreCase("y");
+            menuItem = new Makanan(
+                    masterMenu.getIdMenu(),
+                    masterMenu.getNama(),
+                    masterMenu.getHarga(),
+                    masterMenu.getStok(),
+                    pedas
+            );
+        } else if (masterMenu instanceof Minuman) {
+            System.out.print("Apakah ingin disajikan dingin (pakai es)? [y/n]: ");
+            String jawabDingin = scanner.nextLine().trim();
+            boolean dingin = jawabDingin.equalsIgnoreCase("y");
+
+            menuItem = new Minuman(
+                    masterMenu.getIdMenu(),
+                    masterMenu.getNama(),
+                    masterMenu.getHarga(),
+                    masterMenu.getStok(),
+                    dingin
+            );
+        } else {
+            menuItem = masterMenu;
+        }
 
         System.out.print("Catatan khusus (Enter jika tidak ada): ");
         String catatan = scanner.nextLine().trim();
-
-        Menu menuItem = new Makanan(
-                masterMenu.getIdMenu(),
-                masterMenu.getNama(),
-                masterMenu.getHarga(),
-                masterMenu.getStok(),
-                dipanaskan
-        );
 
         try {
             ItemPesanan item = new ItemPesanan(menuItem, jumlah, catatan);
@@ -221,7 +241,12 @@ public class Main {
         for (int i = 0; i < items.size(); i++) {
             ItemPesanan item = items.get(i);
             String catatan = item.getCatatan().isEmpty() ? "-" : item.getCatatan();
-            String opsi = (item.getMenu() instanceof Makanan m && m.isDipanaskan()) ? "Dipanaskan" : "Biasa";
+            String opsi = "-";
+            if (item.getMenu() instanceof Makanan m) {
+                opsi = m.isPedas() ? "Pedas" : "Biasa";
+            } else if (item.getMenu() instanceof Minuman d) {
+                opsi = d.isDingin() ? "Dingin" : "Hangat";
+            }
             System.out.printf("%d. %dx %-20s (%s) | Catatan: %-12s | Rp %,.0f\n",
                     i + 1, item.getJumlah(), item.getMenu().getNama(), opsi, catatan, item.hitungSubtotal());
         }
@@ -316,8 +341,14 @@ public class Main {
         System.out.println("Status     : " + pesanan.getStatus());
         System.out.println("----------------------------");
         for (ItemPesanan item : pesanan.getItems()) {
+            String opsi = "";
+            if (item.getMenu() instanceof Makanan m && m.isPedas()) {
+                opsi = " [Pedas]";
+            } else if (item.getMenu() instanceof Minuman d) {
+                opsi = d.isDingin() ? " [Dingin]" : " [Hangat]";
+            }
             System.out.printf("%dx %-18s Rp %,.0f\n",
-                    item.getJumlah(), item.getMenu().getNama(), item.hitungSubtotal());
+                    item.getJumlah(), item.getMenu().getNama() + opsi, item.hitungSubtotal());
             if (!item.getCatatan().isEmpty()) {
                 System.out.println("   Catatan: " + item.getCatatan());
             }
