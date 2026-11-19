@@ -60,9 +60,9 @@ public class Main {
         katalogMenu.add(new Makanan("M03", "Mie Goreng Seafood", 28000, 10, false));
         katalogMenu.add(new Makanan("M04", "Soto Ayam Lamongan", 22000, 15, false));
         katalogMenu.add(new Makanan("M05", "Sate Ayam (10 Tusuk)", 32000, 8, false));
-        katalogMenu.add(new Minuman("D01", "Es Teh Manis", 5000, 30, true));
-        katalogMenu.add(new Minuman("D02", "Kopi Susu Gula Aren", 18000, 20, true));
-        katalogMenu.add(new Minuman("D03", "Jeruk Peras Hangat", 8000, 25, false));
+        katalogMenu.add(new Minuman("D01", "Es Teh Manis", 5000, 30, "Regular", "Dingin"));
+        katalogMenu.add(new Minuman("D02", "Kopi Susu Gula Aren", 18000, 20, "Regular", "Dingin"));
+        katalogMenu.add(new Minuman("D03", "Jeruk Peras Hangat", 8000, 25, "Regular", "Panas"));
     }
 
     private static void jalankanSesiKasir() {
@@ -191,27 +191,36 @@ public class Main {
 
         Menu menuItem;
         if (masterMenu instanceof Makanan) {
-            System.out.print("Apakah ingin pedas? [y/n]: ");
-            String jawabPedas = scanner.nextLine().trim();
-            boolean pedas = jawabPedas.equalsIgnoreCase("y");
+            System.out.print("Apakah ingin dipanaskan? (+Rp 2.000/porsi) [y/n]: ");
+            String jawabPanas = scanner.nextLine().trim();
+            boolean dipanaskan = jawabPanas.equalsIgnoreCase("y");
             menuItem = new Makanan(
                     masterMenu.getIdMenu(),
                     masterMenu.getNama(),
                     masterMenu.getHarga(),
                     masterMenu.getStok(),
-                    pedas
+                    dipanaskan
             );
         } else if (masterMenu instanceof Minuman) {
-            System.out.print("Apakah ingin disajikan dingin (pakai es)? [y/n]: ");
-            String jawabDingin = scanner.nextLine().trim();
-            boolean dingin = jawabDingin.equalsIgnoreCase("y");
+            System.out.println("Pilihan Ukuran:");
+            System.out.println("1. Regular (Standar)");
+            System.out.println("2. Large (+Rp 3.000)");
+            int pilihUkuran = bacaInt("Pilih ukuran [1-2]: ", 1, 2);
+            String ukuran = (pilihUkuran == 2) ? "Large" : "Regular";
+
+            System.out.println("Pilihan Suhu:");
+            System.out.println("1. Dingin (Pakai Es)");
+            System.out.println("2. Panas / Hangat");
+            int pilihSuhu = bacaInt("Pilih suhu [1-2]: ", 1, 2);
+            String suhu = (pilihSuhu == 2) ? "Panas" : "Dingin";
 
             menuItem = new Minuman(
                     masterMenu.getIdMenu(),
                     masterMenu.getNama(),
                     masterMenu.getHarga(),
                     masterMenu.getStok(),
-                    dingin
+                    ukuran,
+                    suhu
             );
         } else {
             menuItem = masterMenu;
@@ -243,9 +252,9 @@ public class Main {
             String catatan = item.getCatatan().isEmpty() ? "-" : item.getCatatan();
             String opsi = "-";
             if (item.getMenu() instanceof Makanan m) {
-                opsi = m.isPedas() ? "Pedas" : "Biasa";
+                opsi = m.isDipanaskan() ? "Dipanaskan" : "Biasa";
             } else if (item.getMenu() instanceof Minuman d) {
-                opsi = d.isDingin() ? "Dingin" : "Hangat";
+                opsi = d.getUkuran() + ", " + d.getSuhu();
             }
             System.out.printf("%d. %dx %-20s (%s) | Catatan: %-12s | Rp %,.0f\n",
                     i + 1, item.getJumlah(), item.getMenu().getNama(), opsi, catatan, item.hitungSubtotal());
@@ -342,10 +351,10 @@ public class Main {
         System.out.println("----------------------------");
         for (ItemPesanan item : pesanan.getItems()) {
             String opsi = "";
-            if (item.getMenu() instanceof Makanan m && m.isPedas()) {
-                opsi = " [Pedas]";
+            if (item.getMenu() instanceof Makanan m && m.isDipanaskan()) {
+                opsi = " [Dipanaskan]";
             } else if (item.getMenu() instanceof Minuman d) {
-                opsi = d.isDingin() ? " [Dingin]" : " [Hangat]";
+                opsi = " [" + d.getUkuran() + ", " + d.getSuhu() + "]";
             }
             System.out.printf("%dx %-18s Rp %,.0f\n",
                     item.getJumlah(), item.getMenu().getNama() + opsi, item.hitungSubtotal());
