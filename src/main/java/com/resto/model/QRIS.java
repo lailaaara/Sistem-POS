@@ -46,7 +46,7 @@ public class QRIS extends Pembayaran {
      */
     @Override
     public boolean prosesPembayaran(double total) {
-        if (total <= 0 || kodeQR == null || kodeQR.trim().isEmpty()) {
+        if (total < 0 || kodeQR == null || kodeQR.trim().isEmpty()) {
             return false;
         }
         if (kodeQR.startsWith("QRIS-")) {

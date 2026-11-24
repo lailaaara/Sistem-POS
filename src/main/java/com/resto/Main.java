@@ -84,7 +84,7 @@ public class Main {
             int pilih = bacaInt("Pilih aksi [0-1]: ", 0, 1);
 
             if (pilih == 1) {
-                prosesPemesanan();
+                prosesPemesanan(kasir);
             } else {
                 kasir.logout();
                 sesiAktif = false;
@@ -120,10 +120,10 @@ public class Main {
         }
     }
 
-    private static void prosesPemesanan() {
+    private static void prosesPemesanan(Kasir kasir) {
         int nomorMeja = bacaInt("\nMasukkan Nomor Meja (1-50): ", 1, 50);
         String idPesanan = String.format("ORD-%03d", urutanPesanan++);
-        Pesanan pesanan = new Pesanan(idPesanan, nomorMeja);
+        Pesanan pesanan = kasir.buatPesanan(idPesanan, nomorMeja);
         System.out.println("Pesanan dibuka -> ID: " + pesanan.getIdPesanan() + " | Status: " + pesanan.getStatus());
 
         boolean kelolaKeranjang = true;
@@ -166,6 +166,7 @@ public class Main {
         }
 
         pesanan.setPembayaran(pembayaran);
+        pesanan.buatStruk();
         pesanan.setStatus(Pesanan.SELESAI);
         riwayatPesanan.add(pesanan);
 
@@ -342,7 +343,10 @@ public class Main {
 
     private static void cetakStrukLengkap(Pesanan pesanan, Pembayaran pembayaran) {
         System.out.println();
-        Struk struk = new Struk("STRK-" + pesanan.getIdPesanan());
+        Struk struk = pesanan.getStruk();
+        if (struk == null) {
+            struk = pesanan.buatStruk();
+        }
         struk.cetak();
 
         System.out.println("ID Pesanan : " + pesanan.getIdPesanan());

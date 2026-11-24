@@ -58,7 +58,7 @@ public class Tunai extends Pembayaran {
      */
     @Override
     public boolean prosesPembayaran(double total) {
-        if (total <= 0) {
+        if (total < 0) {
             return false;
         }
         if (this.uangDiterima >= total) {
@@ -75,7 +75,7 @@ public class Tunai extends Pembayaran {
      * @return Jumlah uang kembalian, atau 0 jika pembayaran belum berhasil
      */
     public double hitungKembalian() {
-        if (this.jumlahBayar <= 0 || this.uangDiterima < this.jumlahBayar) {
+        if (this.jumlahBayar < 0 || this.uangDiterima < this.jumlahBayar) {
             return 0.0;
         }
         return this.uangDiterima - this.jumlahBayar;

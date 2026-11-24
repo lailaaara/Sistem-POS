@@ -13,6 +13,12 @@ public class Kasir extends Pengguna {
         return new Pesanan("ORD-NEW", 1);
     }
 
+    // Overload untuk pembuatan pesanan dinamis dari input kasir
+    public Pesanan buatPesanan(String idPesanan, int nomorMeja) {
+        System.out.println("Kasir [" + getNama() + "] memproses pesanan " + idPesanan + " untuk meja " + nomorMeja + "...");
+        return new Pesanan(idPesanan, nomorMeja);
+    }
+
     @Override
     public String getPeran() {
         return "Kasir";

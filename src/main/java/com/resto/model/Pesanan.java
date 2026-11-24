@@ -22,6 +22,7 @@ public class Pesanan {
     private final List<ItemPesanan> items = new ArrayList<>();
     private Diskon diskon; // Relasi UML: memakai 0..1 Diskon
     private Pembayaran pembayaran; // Relasi UML: dibayar dengan 0..1 Pembayaran
+    private Struk struk; // Relasi UML: menghasilkan 0..1 Struk
 
     public Pesanan(String idPesanan, int nomorMeja) {
         this(idPesanan, new Date(), MENUNGGU_PEMBAYARAN, nomorMeja);
@@ -62,6 +63,9 @@ public class Pesanan {
                 && !DIBATALKAN.equals(status)) {
             throw new IllegalArgumentException("Status pesanan tidak dikenal: " + status);
         }
+        if (SELESAI.equals(status) && items.isEmpty()) {
+            throw new IllegalStateException("Pesanan tidak dapat diselesaikan karena belum memiliki item (minimal 1 menu).");
+        }
         if (this.status != null
                 && !this.status.equals(status)
                 && !MENUNGGU_PEMBAYARAN.equals(this.status)) {
@@ -93,7 +97,23 @@ public class Pesanan {
 
     public void setPembayaran(Pembayaran pembayaran) {
         pastikanMasihDapatDiubah();
+        if (items.isEmpty()) {
+            throw new IllegalStateException("Pesanan tidak dapat diproses karena keranjang masih kosong (minimal 1 menu).");
+        }
         this.pembayaran = pembayaran;
+    }
+
+    public Struk getStruk() {
+        return struk;
+    }
+
+    public void setStruk(Struk struk) {
+        this.struk = struk;
+    }
+
+    public Struk buatStruk() {
+        this.struk = new Struk("STRK-" + this.idPesanan);
+        return this.struk;
     }
 
     public void tambahItem(ItemPesanan item) {
