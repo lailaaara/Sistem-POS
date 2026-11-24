@@ -1,0 +1,171 @@
+[
+    {
+        "idPesanan": "ORD-TEST-01",
+        "nomorMeja": 5,
+        "tanggal": "2026-11-24 14:25:24",
+        "status": "SELESAI",
+        "subtotal": 60000,
+        "total": 54000,
+        "pembayaranTipe": "Tunai",
+        "kembalian": 46000,
+        "noStruk": "STRK-ORD-TEST-01",
+        "items": [
+            {
+                "idMenu": "M01",
+                "nama": "Nasi Goreng Spesial",
+                "jumlah": 2,
+                "catatan": "Sedang",
+                "subtotal": 50000
+            },
+            {
+                "idMenu": "D01",
+                "nama": "Es Teh Manis",
+                "jumlah": 2,
+                "catatan": "Kurang manis",
+                "subtotal": 10000
+            }
+        ]
+    },
+    {
+        "idPesanan": "ORD-001",
+        "nomorMeja": 7,
+        "tanggal": "2026-11-24 14:30:48",
+        "status": "SELESAI",
+        "subtotal": 70000,
+        "total": 63000,
+        "pembayaranTipe": "Tunai",
+        "kembalian": 37000,
+        "noStruk": "STRK-ORD-001",
+        "items": [
+            {
+                "idMenu": "M01",
+                "nama": "Nasi Goreng Spesial",
+                "jumlah": 2,
+                "catatan": "Pedas level 2",
+                "subtotal": 54000
+            },
+            {
+                "idMenu": "D01",
+                "nama": "Es Teh Manis",
+                "jumlah": 2,
+                "catatan": "Gula sedikit",
+                "subtotal": 16000
+            }
+        ]
+    },
+    {
+        "idPesanan": "ORD-1859",
+        "nomorMeja": 1,
+        "tanggal": "2026-11-24 14:39:03",
+        "status": "SELESAI",
+        "subtotal": 60000,
+        "total": 0,
+        "pembayaranTipe": "Tunai",
+        "kembalian": 90000,
+        "noStruk": "STRK-ORD-1859",
+        "items": [
+            {
+                "idMenu": "M01",
+                "nama": "Nasi Goreng Spesial",
+                "jumlah": 1,
+                "catatan": "",
+                "subtotal": 25000
+            },
+            {
+                "idMenu": "M02",
+                "nama": "Ayam Bakar Madu",
+                "jumlah": 1,
+                "catatan": "",
+                "subtotal": 30000
+            },
+            {
+                "idMenu": "D01",
+                "nama": "Es Teh Manis",
+                "jumlah": 1,
+                "catatan": "",
+                "subtotal": 5000
+            }
+        ]
+    },
+    {
+        "idPesanan": "ORD-7F8A",
+        "nomorMeja": 1,
+        "tanggal": "2026-11-24 14:40:27",
+        "status": "SELESAI",
+        "subtotal": 52000,
+        "total": 52000,
+        "pembayaranTipe": "QRIS",
+        "kembalian": 0,
+        "noStruk": "STRK-ORD-7F8A",
+        "items": [
+            {
+                "idMenu": "M02",
+                "nama": "Ayam Bakar Madu",
+                "jumlah": 1,
+                "catatan": "",
+                "subtotal": 30000
+            },
+            {
+                "idMenu": "M04",
+                "nama": "Soto Ayam Lamongan",
+                "jumlah": 1,
+                "catatan": "",
+                "subtotal": 22000
+            }
+        ]
+    },
+    {
+        "idPesanan": "ORD-2D66",
+        "nomorMeja": 1,
+        "tanggal": "2026-11-24 15:06:45",
+        "status": "SELESAI",
+        "subtotal": 58000,
+        "total": 48000,
+        "pembayaranTipe": "Tunai",
+        "kembalian": 10000,
+        "noStruk": "STRK-ORD-2D66",
+        "items": [
+            {
+                "idMenu": "M02",
+                "nama": "Ayam Bakar Madu",
+                "jumlah": 1,
+                "catatan": "",
+                "subtotal": 30000
+            },
+            {
+                "idMenu": "M03",
+                "nama": "Mie Goreng Seafood",
+                "jumlah": 1,
+                "catatan": "",
+                "subtotal": 28000
+            }
+        ]
+    },
+    {
+        "idPesanan": "ORD-F72B",
+        "nomorMeja": 1,
+        "tanggal": "2026-11-24 15:09:11",
+        "status": "SELESAI",
+        "subtotal": 43000,
+        "total": 33000,
+        "pembayaranTipe": "QRIS",
+        "kembalian": 0,
+        "noStruk": "STRK-ORD-F72B",
+        "items": [
+            {
+                "idMenu": "D02",
+                "nama": "Kopi Susu Gula Aren",
+                "jumlah": 1,
+                "catatan": "",
+                "subtotal": 21000
+            },
+            {
+                "idMenu": "M04",
+                "nama": "Soto Ayam Lamongan",
+                "jumlah": 1,
+                "catatan": "",
+                "subtotal": 22000
+            }
+        ]
+    }
+]

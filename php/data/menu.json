@@ -1,0 +1,69 @@
+[
+    {
+        "tipe": "Makanan",
+        "id": "M01",
+        "nama": "Nasi Goreng Spesial",
+        "harga": 25000,
+        "stok": 12,
+        "dipanaskan": false
+    },
+    {
+        "tipe": "Makanan",
+        "id": "M02",
+        "nama": "Ayam Bakar Madu",
+        "harga": 30000,
+        "stok": 9,
+        "dipanaskan": false
+    },
+    {
+        "tipe": "Makanan",
+        "id": "M03",
+        "nama": "Mie Goreng Seafood",
+        "harga": 28000,
+        "stok": 9,
+        "dipanaskan": false
+    },
+    {
+        "tipe": "Makanan",
+        "id": "M04",
+        "nama": "Soto Ayam Lamongan",
+        "harga": 22000,
+        "stok": 13,
+        "dipanaskan": false
+    },
+    {
+        "tipe": "Makanan",
+        "id": "M05",
+        "nama": "Sate Ayam (10 Tusuk)",
+        "harga": 32000,
+        "stok": 8,
+        "dipanaskan": false
+    },
+    {
+        "tipe": "Minuman",
+        "id": "D01",
+        "nama": "Es Teh Manis",
+        "harga": 5000,
+        "stok": 27,
+        "ukuran": "Regular",
+        "suhu": "Dingin"
+    },
+    {
+        "tipe": "Minuman",
+        "id": "D02",
+        "nama": "Kopi Susu Gula Aren",
+        "harga": 18000,
+        "stok": 19,
+        "ukuran": "Regular",
+        "suhu": "Dingin"
+    },
+    {
+        "tipe": "Minuman",
+        "id": "D03",
+        "nama": "Jeruk Peras Hangat",
+        "harga": 8000,
+        "stok": 25,
+        "ukuran": "Regular",
+        "suhu": "Panas"
+    }
+]
